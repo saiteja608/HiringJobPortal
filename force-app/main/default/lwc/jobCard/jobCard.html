@@ -1,0 +1,60 @@
+<template>
+    <article class="job-card slds-card">
+        <div class="job-card__body slds-p-around_medium">
+
+            <!-- Type Badge -->
+            <div class="slds-m-bottom_x-small">
+                <span class={typeBadgeClass}>{job.Type__c}</span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="slds-text-heading_small job-card__title slds-m-bottom_x-small">
+                {job.Name}
+            </h3>
+
+            <!-- Location -->
+            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">
+                <lightning-icon
+                    icon-name="utility:location"
+                    size="xx-small"
+                    class="slds-m-right_xx-small">
+                </lightning-icon>
+                {job.Location__c}
+            </p>
+
+            <!-- Salary -->
+            <template lwc:if={job.Salary__c}>
+                <p class="slds-text-body_small salary-text slds-m-bottom_small">
+                    <lightning-icon
+                        icon-name="utility:money"
+                        size="xx-small"
+                        class="slds-m-right_xx-small">
+                    </lightning-icon>
+                    {job.Salary__c}
+                </p>
+            </template>
+
+            <!-- Experience -->
+            <template lwc:if={job.Experience_Required__c}>
+                <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_medium">
+                    <lightning-icon
+                        icon-name="utility:user"
+                        size="xx-small"
+                        class="slds-m-right_xx-small">
+                    </lightning-icon>
+                    {job.Experience_Required__c} experience
+                </p>
+            </template>
+
+        </div>
+
+        <div class="job-card__footer slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-button
+                label="View Details"
+                variant="brand"
+                onclick={handleViewDetails}
+                class="view-btn">
+            </lightning-button>
+        </div>
+    </article>
+</template>
