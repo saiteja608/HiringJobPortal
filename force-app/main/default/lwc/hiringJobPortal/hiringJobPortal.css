@@ -1,0 +1,21 @@
+.portal-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.portal-header {
+    background: linear-gradient(135deg, #0070d2 0%, #005fb2 100%);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    color: #fff;
+}
+
+.portal-title {
+    color: #fff !important;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.portal-header p {
+    color: rgba(255, 255, 255, 0.85) !important;
+}

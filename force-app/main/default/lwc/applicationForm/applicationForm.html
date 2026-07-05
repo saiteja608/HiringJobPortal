@@ -1,0 +1,184 @@
+<template>
+    <!-- Back button -->
+    <div class="slds-m-bottom_medium">
+        <lightning-button-icon
+            icon-name="utility:back"
+            variant="border-filled"
+            alternative-text="Back to job details"
+            title="Back to job details"
+            onclick={handleBack}>
+        </lightning-button-icon>
+        <span class="slds-text-color_weak slds-text-body_small slds-m-left_x-small">Back to Job Details</span>
+    </div>
+
+    <div class="slds-card form-card">
+
+        <!-- Card Header -->
+        <div class="form-header slds-p-around_large">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:work_queue" size="medium"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-text-heading_medium form-title">Submit Your Application</h2>
+                    <p class="slds-text-body_small slds-text-color_weak">
+                        Fill in the details below. Fields marked <span class="required-star">*</span> are required.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-card__body slds-p-horizontal_large slds-p-bottom_large">
+
+            <!-- Server-side error -->
+            <template lwc:if={submitError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
+                    <lightning-icon icon-name="utility:error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                    <span>{submitError}</span>
+                </div>
+            </template>
+
+            <form onsubmit={handleFormSubmit} novalidate>
+
+                <!-- Section: Personal Information -->
+                <fieldset class="form-section slds-m-bottom_large">
+                    <legend class="form-section__title">Personal Information</legend>
+
+                    <div class="slds-grid slds-wrap slds-gutters">
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input
+                                type="text"
+                                name="applicantName"
+                                label="Full Name"
+                                placeholder="Jane Doe"
+                                required
+                                value={formData.applicantName}
+                                onchange={handleFieldChange}
+                                message-when-value-missing="Full name is required"
+                                class="slds-m-bottom_small">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input
+                                type="email"
+                                name="email"
+                                label="Email Address"
+                                placeholder="jane@example.com"
+                                required
+                                value={formData.email}
+                                onchange={handleFieldChange}
+                                message-when-value-missing="Email address is required"
+                                message-when-type-mismatch="Please enter a valid email address"
+                                class="slds-m-bottom_small">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input
+                                type="tel"
+                                name="phone"
+                                label="Phone Number"
+                                placeholder="+1 (555) 000-0000"
+                                value={formData.phone}
+                                onchange={handleFieldChange}
+                                class="slds-m-bottom_small">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input
+                                type="number"
+                                name="yearsOfExperience"
+                                label="Years of Experience"
+                                placeholder="0"
+                                min="0"
+                                max="50"
+                                value={formData.yearsOfExperience}
+                                onchange={handleFieldChange}
+                                message-when-range-underflow="Experience cannot be negative"
+                                message-when-range-overflow="Please enter a valid number of years"
+                                class="slds-m-bottom_small">
+                            </lightning-input>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <!-- Section: Application Details -->
+                <fieldset class="form-section slds-m-bottom_large">
+                    <legend class="form-section__title">Application Details</legend>
+
+                    <div class="slds-grid slds-wrap slds-gutters">
+
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input
+                                type="url"
+                                name="resumeLink"
+                                label="Resume / Portfolio Link"
+                                placeholder="https://linkedin.com/in/yourprofile"
+                                value={formData.resumeLink}
+                                onchange={handleFieldChange}
+                                message-when-type-mismatch="Please enter a valid URL (include https://)"
+                                class="slds-m-bottom_small">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label" for="coverLetter">
+                                    <abbr class="slds-required" title="required">*</abbr>
+                                    Cover Letter
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <textarea
+                                        id="coverLetter"
+                                        name="coverLetter"
+                                        class={coverLetterClass}
+                                        rows="6"
+                                        placeholder="Tell us why you're a great fit for this role..."
+                                        value={formData.coverLetter}
+                                        onchange={handleFieldChange}
+                                        oninput={handleFieldChange}>
+                                    </textarea>
+                                    <template lwc:if={coverLetterError}>
+                                        <p class="slds-form-error">{coverLetterError}</p>
+                                    </template>
+                                </div>
+                                <div class="char-counter slds-text-color_weak">
+                                    {coverLetterLength} / 2000 characters
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <!-- Action Buttons -->
+                <div class="slds-grid slds-grid_align-end slds-gutters">
+                    <div class="slds-col slds-grow-none">
+                        <lightning-button
+                            label="Cancel"
+                            variant="neutral"
+                            onclick={handleBack}
+                            disabled={isSubmitting}>
+                        </lightning-button>
+                    </div>
+                    <div class="slds-col slds-grow-none">
+                        <lightning-button
+                            label={submitButtonLabel}
+                            variant="brand"
+                            type="submit"
+                            onclick={handleFormSubmit}
+                            disabled={isSubmitting}
+                            icon-name={submitButtonIcon}
+                            icon-position="left">
+                        </lightning-button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</template>

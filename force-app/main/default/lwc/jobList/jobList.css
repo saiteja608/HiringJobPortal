@@ -1,0 +1,36 @@
+.job-list-header {
+    border-bottom: 1px solid #e0e5ee;
+    padding-bottom: 1rem;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-chip {
+    display: inline-block;
+    padding: 0.2rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid #dddbda;
+    background: #fff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+}
+
+.filter-chip:hover {
+    background: #f3f2f2;
+}
+
+.filter-chip_active {
+    background: #0070d2;
+    color: #fff;
+    border-color: #0070d2;
+}
+
+.search-input {
+    min-width: 220px;
+}

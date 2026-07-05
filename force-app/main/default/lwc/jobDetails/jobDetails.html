@@ -1,0 +1,140 @@
+<template>
+    <!-- Back button -->
+    <div class="slds-m-bottom_medium">
+        <lightning-button-icon
+            icon-name="utility:back"
+            variant="border-filled"
+            alternative-text="Back to jobs"
+            title="Back to jobs"
+            onclick={handleBack}
+            class="slds-m-right_small">
+        </lightning-button-icon>
+        <span class="slds-text-color_weak slds-text-body_small">Back to Jobs</span>
+    </div>
+
+    <!-- Loading -->
+    <template lwc:if={isLoading}>
+        <div class="slds-align_absolute-center slds-p-around_large">
+            <lightning-spinner alternative-text="Loading job details..." size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+    <!-- Error -->
+    <template lwc:if={error}>
+        <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+            <lightning-icon icon-name="utility:error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+            <span>{error}</span>
+        </div>
+    </template>
+
+    <!-- Job Details Card -->
+    <template lwc:if={job}>
+        <div class="slds-card details-card">
+            <!-- Hero Header -->
+            <div class="details-hero slds-p-around_large">
+                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4">
+                        <span class={typeBadgeClass}>{job.Type__c}</span>
+                        <h1 class="slds-text-heading_large slds-m-top_x-small details-title">
+                            {job.Name}
+                        </h1>
+                        <div class="slds-grid slds-wrap slds-m-top_small meta-row">
+                            <span class="meta-item">
+                                <lightning-icon icon-name="utility:location" size="xx-small"></lightning-icon>
+                                &nbsp;{job.Location__c}
+                            </span>
+                            <template lwc:if={job.Experience_Required__c}>
+                                <span class="meta-item">
+                                    <lightning-icon icon-name="utility:user" size="xx-small"></lightning-icon>
+                                    &nbsp;{job.Experience_Required__c}
+                                </span>
+                            </template>
+                            <template lwc:if={job.Salary__c}>
+                                <span class="meta-item salary-meta">
+                                    <lightning-icon icon-name="utility:money" size="xx-small"></lightning-icon>
+                                    &nbsp;{job.Salary__c}
+                                </span>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-m-top_medium apply-btn-col">
+                        <lightning-button
+                            label="Apply Now"
+                            variant="brand"
+                            icon-name="utility:right"
+                            icon-position="right"
+                            onclick={handleApply}
+                            class="apply-btn">
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-card__body slds-p-horizontal_large slds-p-bottom_large">
+                <div class="slds-grid slds-wrap slds-gutters_large">
+
+                    <!-- Left Column -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+
+                        <!-- Description -->
+                        <section class="detail-section slds-m-bottom_large">
+                            <h2 class="section-title">
+                                <lightning-icon icon-name="utility:description" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                Job Description
+                            </h2>
+                            <p class="slds-text-body_regular description-text">{job.Description__c}</p>
+                        </section>
+
+                        <!-- Skills -->
+                        <template lwc:if={job.Skills_Required__c}>
+                            <section class="detail-section slds-m-bottom_large">
+                                <h2 class="section-title">
+                                    <lightning-icon icon-name="utility:apex" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                    Skills Required
+                                </h2>
+                                <div class="skills-container">
+                                    <template for:each={skillsList} for:item="skill">
+                                        <span key={skill} class="skill-tag">{skill}</span>
+                                    </template>
+                                </div>
+                            </section>
+                        </template>
+
+                    </div>
+
+                    <!-- Right Column: Summary Card -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <div class="summary-card slds-p-around_medium">
+                            <h3 class="slds-text-heading_small slds-m-bottom_medium">Job Summary</h3>
+                            <dl class="summary-list">
+                                <dt>Job Type</dt>
+                                <dd>{job.Type__c}</dd>
+
+                                <dt>Location</dt>
+                                <dd>{job.Location__c}</dd>
+
+                                <template lwc:if={job.Experience_Required__c}>
+                                    <dt>Experience</dt>
+                                    <dd>{job.Experience_Required__c}</dd>
+                                </template>
+
+                                <template lwc:if={job.Salary__c}>
+                                    <dt>Salary</dt>
+                                    <dd class="salary-dd">{job.Salary__c}</dd>
+                                </template>
+                            </dl>
+
+                            <lightning-button
+                                label="Apply Now"
+                                variant="brand"
+                                onclick={handleApply}
+                                class="slds-m-top_medium apply-btn">
+                            </lightning-button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

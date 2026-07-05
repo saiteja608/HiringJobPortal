@@ -1,0 +1,75 @@
+<template>
+    <div class="slds-m-bottom_medium job-list-header">
+        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+            <div class="slds-col">
+                <h2 class="slds-text-heading_medium">
+                    Open Positions
+                    <template lwc:if={jobs}>
+                        <span class="slds-badge slds-badge_lightest slds-m-left_small">{jobs.length} Jobs</span>
+                    </template>
+                </h2>
+            </div>
+            <div class="slds-col slds-grow-none">
+                <lightning-input
+                    type="search"
+                    label="Search jobs"
+                    variant="label-hidden"
+                    placeholder="Search by title or location..."
+                    value={searchTerm}
+                    onchange={handleSearch}
+                    class="search-input">
+                </lightning-input>
+            </div>
+        </div>
+
+        <!-- Filter chips -->
+        <div class="slds-m-top_small filter-row">
+            <template for:each={filterOptions} for:item="opt">
+                <span
+                    key={opt.value}
+                    class={opt.cssClass}
+                    onclick={handleFilterClick}
+                    data-value={opt.value}>
+                    {opt.label}
+                </span>
+            </template>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <template lwc:if={isLoading}>
+        <div class="slds-align_absolute-center slds-p-around_large">
+            <lightning-spinner alternative-text="Loading jobs..." size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+    <!-- Error -->
+    <template lwc:if={error}>
+        <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+            <lightning-icon icon-name="utility:error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+            <span>{error}</span>
+        </div>
+    </template>
+
+    <!-- No results -->
+    <template lwc:if={noResults}>
+        <div class="slds-align_absolute-center slds-p-around_x-large">
+            <div class="slds-text-align_center">
+                <lightning-icon icon-name="utility:search" size="large" class="slds-m-bottom_medium"></lightning-icon>
+                <p class="slds-text-heading_small">No jobs found</p>
+                <p class="slds-text-color_weak">Try adjusting your search or filter</p>
+            </div>
+        </div>
+    </template>
+
+    <!-- Job Cards Grid -->
+    <template lwc:if={hasJobs}>
+        <div class="slds-grid slds-wrap slds-gutters">
+            <template for:each={filteredJobs} for:item="job">
+                <div key={job.Id} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-m-bottom_medium">
+                    <c-job-card job={job} onviewjob={handleViewJob}></c-job-card>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

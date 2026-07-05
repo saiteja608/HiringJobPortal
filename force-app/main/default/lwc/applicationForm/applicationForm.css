@@ -1,0 +1,75 @@
+.form-card {
+    border-radius: 8px;
+    border: 1px solid #e0e5ee;
+    overflow: hidden;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #f0f4fd 0%, #e8eeff 100%);
+    border-bottom: 1px solid #d8dde6;
+}
+
+.form-title {
+    color: #16325c;
+    font-weight: 700;
+}
+
+.required-star {
+    color: #c23934;
+    font-weight: 700;
+}
+
+/* Form sections */
+.form-section {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.form-section__title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #706e6b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e5ee;
+    display: block;
+    width: 100%;
+}
+
+/* Cover letter textarea */
+.slds-textarea {
+    width: 100%;
+    min-height: 140px;
+    resize: vertical;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+}
+
+.slds-textarea:focus {
+    outline: none;
+    border-color: #0070d2;
+    box-shadow: 0 0 0 3px rgba(0, 112, 210, 0.15);
+}
+
+.slds-textarea.slds-has-error {
+    border-color: #c23934;
+}
+
+.slds-form-error {
+    color: #c23934;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.char-counter {
+    font-size: 0.75rem;
+    text-align: right;
+    margin-top: 0.25rem;
+}

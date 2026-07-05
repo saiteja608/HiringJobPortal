@@ -1,0 +1,69 @@
+<template>
+    <div class="portal-wrapper slds-p-around_medium">
+
+        <!-- Header -->
+        <div class="portal-header slds-m-bottom_large">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:job_profile" size="large"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_large portal-title">Hiring Job Portal</h1>
+                    <p class="slds-text-body_regular slds-text-color_weak">
+                        Find your next opportunity and grow your career
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Router -->
+        <template lwc:if={showJobList}>
+            <c-job-list onviewjob={handleViewJob}></c-job-list>
+        </template>
+
+        <template lwc:if={showJobDetails}>
+            <c-job-details
+                job-id={selectedJobId}
+                onapply={handleApply}
+                onback={handleBackToList}>
+            </c-job-details>
+        </template>
+
+        <template lwc:if={showApplicationForm}>
+            <c-application-form
+                job-id={selectedJobId}
+                onback={handleBackToDetails}
+                onsubmitsuccess={handleSubmitSuccess}>
+            </c-application-form>
+        </template>
+
+        <template lwc:if={showSuccessPage}>
+            <div class="slds-illustration slds-illustration_small slds-m-top_large">
+                <div class="slds-text-longform slds-text-align_center">
+                    <lightning-icon
+                        icon-name="action:approval"
+                        size="large"
+                        variant="success"
+                        class="slds-m-bottom_medium">
+                    </lightning-icon>
+                    <h3 class="slds-text-heading_medium slds-m-top_medium">
+                        Application Submitted Successfully!
+                    </h3>
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-top_small">
+                        Thank you for applying. We'll review your application and get back to you soon.
+                    </p>
+                    <p class="slds-m-top_x-small slds-text-color_weak">
+                        Application ID: <strong>{submittedAppId}</strong>
+                    </p>
+                    <lightning-button
+                        label="Browse More Jobs"
+                        variant="brand"
+                        class="slds-m-top_medium"
+                        onclick={handleBackToList}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+
+    </div>
+</template>
